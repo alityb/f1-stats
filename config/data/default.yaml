@@ -1,0 +1,27 @@
+# Data ingestion configuration
+
+# FastF1 settings
+fastf1:
+  cache_enabled: true
+  cache_dir: ${paths.cache_dir}
+
+# DuckDB settings
+duckdb:
+  db_path: ${paths.duckdb_dir}/f1_laps.db
+
+# Race session types to load
+session_types:
+  - Race
+
+# Lap filtering thresholds
+lap_filtering:
+  max_lap_time_seconds: 200  # Filter out extremely slow laps
+  min_lap_time_seconds: 60   # Filter out invalid fast laps
+
+# Feature extraction
+features:
+  # Traffic detection threshold (seconds gap to car ahead)
+  clean_air_threshold: 3.0
+
+  # Safety car / VSC track status codes
+  safety_car_codes: [4, 5, 6, 7]  # SC, VSC, Red flag, etc.

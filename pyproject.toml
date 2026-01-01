@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "f1-race-pace"
+version = "0.1.0"
+description = "F1 Race Pace Decomposition using Deep Learning"
+requires-python = ">=3.10"
+dependencies = [
+    "fastf1>=3.3.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "duckdb>=0.10.0",
+    "torch>=2.1.0",
+    "hydra-core>=1.3.0",
+    "omegaconf>=2.3.0",
+    "scikit-learn>=1.3.0",
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+    "pyarrow>=14.0.0",
+    "tqdm>=4.65.0",
+    "tensorboard>=2.15.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.5.0",
+    "jupyter>=1.0.0",
+    "ipykernel>=6.25.0",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true

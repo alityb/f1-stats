@@ -1,0 +1,28 @@
+defaults:
+  - data: default
+  - model: tcn
+  - training: default
+  - _self_
+
+# Hydra run directory
+hydra:
+  run:
+    dir: outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  sweep:
+    dir: multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+
+# Project paths
+paths:
+  data_dir: data
+  cache_dir: data/cache
+  duckdb_dir: data/duckdb
+  dataset_dir: dataset
+  stints_dir: dataset/stints
+  exports_dir: exports
+  logs_dir: logs
+
+# Seasons to process
+seasons: [2023, 2024, 2025]
+
+# Random seed
+seed: 42

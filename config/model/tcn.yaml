@@ -1,0 +1,55 @@
+# TCN-based model configuration
+
+name: tcn_pace_decomposition
+
+# Embedding dimensions
+embeddings:
+  driver_dim: 16
+  car_dim: 16
+  track_dim: 16
+  season_dim: 8
+  compound_dim: 8
+  session_type_dim: 4
+
+# Continuous feature encoder
+continuous_encoder:
+  hidden_dims: [32, 32]
+  activation: relu
+  dropout: 0.1
+
+# TCN sequence encoder
+tcn:
+  num_channels: [64, 64, 128, 128]  # Channel progression per layer
+  kernel_size: 3
+  dropout: 0.2
+
+# Factorized prediction heads
+prediction_heads:
+  # Base pace head (from TCN output)
+  base:
+    hidden_dims: [64, 32]
+    activation: relu
+
+  # Car contribution (car + track + season)
+  car:
+    hidden_dims: [32, 16]
+    activation: relu
+
+  # Driver contribution (driver + track)
+  driver:
+    hidden_dims: [32, 16]
+    activation: relu
+    l2_penalty: 0.01  # Shrinkage toward zero
+
+  # Tyre degradation (compound + age + stint_length)
+  tyre:
+    hidden_dims: [24, 12]
+    activation: relu
+
+  # Traffic penalty (clean_air_flag + context)
+  traffic:
+    hidden_dims: [16, 8]
+    activation: relu
+
+# Total model dimension
+# token_dim = sum(embedding_dims) + continuous_encoder_output_dim
