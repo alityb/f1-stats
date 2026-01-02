@@ -2,6 +2,7 @@ defaults:
   - data: default
   - model: tcn
   - training: default
+  - api: default
   - _self_
 
 # Hydra run directory

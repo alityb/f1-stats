@@ -56,4 +56,4 @@ early_stopping:
 
 # Hardware
 device: auto  # auto, cpu, cuda, mps
-num_workers: 4  # DataLoader workers
+num_workers: 0  # DataLoader workers (set to 0 on macOS to avoid "too many open files")
