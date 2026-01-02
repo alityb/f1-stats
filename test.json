@@ -1,0 +1,1864 @@
+{
+  "timestamp": "2026-01-02 14:06:05",
+  "test_summary": {
+    "total": 49,
+    "passed": 42,
+    "failed": 7,
+    "success_rate": 85.71428571428571,
+    "categories": {
+      "health": {
+        "total": 2,
+        "passed": 2,
+        "failed": 0
+      },
+      "teammate_battle": {
+        "total": 10,
+        "passed": 10,
+        "failed": 0
+      },
+      "edge_case": {
+        "total": 3,
+        "passed": 3,
+        "failed": 0
+      },
+      "race_specific": {
+        "total": 4,
+        "passed": 2,
+        "failed": 2
+      },
+      "track_specific": {
+        "total": 4,
+        "passed": 0,
+        "failed": 4
+      },
+      "tme_compound": {
+        "total": 4,
+        "passed": 4,
+        "failed": 0
+      },
+      "tme_full": {
+        "total": 3,
+        "passed": 3,
+        "failed": 0
+      },
+      "teammate_comparison": {
+        "total": 5,
+        "passed": 5,
+        "failed": 0
+      },
+      "tpi_season": {
+        "total": 8,
+        "passed": 8,
+        "failed": 0
+      },
+      "tpi_comparison": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "error_handling": {
+        "total": 5,
+        "passed": 4,
+        "failed": 1
+      }
+    },
+    "response_times": {
+      "min": 2.39,
+      "max": 8190.92,
+      "mean": 902.6353061224493
+    }
+  },
+  "tests": [
+    {
+      "category": "health",
+      "name": "Basic health check",
+      "endpoint": "/health",
+      "params": null,
+      "status_code": 200,
+      "response_time_ms": 9.52,
+      "success": true,
+      "data": {
+        "status": "healthy",
+        "model_loaded": true,
+        "db_connected": true
+      }
+    },
+    {
+      "category": "health",
+      "name": "Model info",
+      "endpoint": "/health/model",
+      "params": null,
+      "status_code": 200,
+      "response_time_ms": 2.87,
+      "success": true,
+      "data": {
+        "checkpoint_path": "checkpoints/best_model.pt",
+        "epoch": 42,
+        "best_val_metric": 1.9750357568264008,
+        "vocab_sizes": {
+          "driver": 29,
+          "car": 31,
+          "track": 26,
+          "season": 3,
+          "compound": 7
+        }
+      }
+    },
+    {
+      "category": "teammate_battle",
+      "name": "Red Bull: VER vs PER",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "VER",
+          "PER"
+        ],
+        "metric_type": "dab",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1722.4,
+      "success": true,
+      "data": {
+        "metric_type": "dab",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "drivers": [
+          {
+            "driver_code": "VER",
+            "value": {
+              "mean_dab": 0.33942583236927426,
+              "median_dab": 1.0891736898207132,
+              "std_dab": 3.924071082503481,
+              "percentile_75": 4.016199484803623,
+              "percentile_25": -3.06618653204208,
+              "num_stints": 64
+            },
+            "rank": 1
+          },
+          {
+            "driver_code": "PER",
+            "value": {
+              "mean_dab": -0.3148297575599057,
+              "median_dab": 1.0315746221327249,
+              "std_dab": 3.81534710087512,
+              "percentile_75": 2.970966711976475,
+              "percentile_25": -3.731404885313564,
+              "num_stints": 69
+            },
+            "rank": 2
+          }
+        ],
+        "statistics": {
+          "max_delta": 0.65425558992918,
+          "mean_value": 0.01229803740468427,
+          "std_value": 0.32712779496459
+        }
+      }
+    },
+    {
+      "category": "teammate_battle",
+      "name": "Mercedes: HAM vs RUS",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "HAM",
+          "RUS"
+        ],
+        "metric_type": "dab",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1659.75,
+      "success": true,
+      "data": {
+        "metric_type": "dab",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "drivers": [
+          {
+            "driver_code": "RUS",
+            "value": {
+              "mean_dab": 0.710000868999597,
+              "median_dab": 2.124836452079542,
+              "std_dab": 3.7368115640432626,
+              "percentile_75": 3.740195758414991,
+              "percentile_25": -3.03534840814995,
+              "num_stints": 66
+            },
+            "rank": 1
+          },
+          {
+            "driver_code": "HAM",
+            "value": {
+              "mean_dab": -0.7100008689995966,
+              "median_dab": 0.5039467883832529,
+              "std_dab": 3.852860641512469,
+              "percentile_75": 3.0590577197797373,
+              "percentile_25": -4.612334721016161,
+              "num_stints": 66
+            },
+            "rank": 2
+          }
+        ],
+        "statistics": {
+          "max_delta": 1.4200017379991936,
+          "mean_value": 2.220446049250313e-16,
+          "std_value": 0.7100008689995968
+        }
+      }
+    },
+    {
+      "category": "teammate_battle",
+      "name": "Ferrari: LEC vs SAI",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "LEC",
+          "SAI"
+        ],
+        "metric_type": "dab",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1668.57,
+      "success": true,
+      "data": {
+        "metric_type": "dab",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "drivers": [
+          {
+            "driver_code": "LEC",
+            "value": {
+              "mean_dab": 0.7914682899002361,
+              "median_dab": 2.122018209144251,
+              "std_dab": 3.8446174402159774,
+              "percentile_75": 3.7520173699108526,
+              "percentile_25": -2.809176096275671,
+              "num_stints": 66
+            },
+            "rank": 1
+          },
+          {
+            "driver_code": "SAI",
+            "value": {
+              "mean_dab": -0.8492225380261191,
+              "median_dab": 0.7069543511120244,
+              "std_dab": 4.049062703827689,
+              "percentile_75": 2.2782338768688604,
+              "percentile_25": -4.710096964195593,
+              "num_stints": 61
+            },
+            "rank": 2
+          }
+        ],
+        "statistics": {
+          "max_delta": 1.6406908279263552,
+          "mean_value": -0.028877124062941517,
+          "std_value": 0.8203454139631776
+        }
+      }
+    },
+    {
+      "category": "teammate_battle",
+      "name": "McLaren: NOR vs PIA",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "NOR",
+          "PIA"
+        ],
+        "metric_type": "dab",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1644.74,
+      "success": true,
+      "data": {
+        "metric_type": "dab",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "drivers": [
+          {
+            "driver_code": "NOR",
+            "value": {
+              "mean_dab": 0.3485379107615838,
+              "median_dab": 1.74140502842328,
+              "std_dab": 3.8039415495938034,
+              "percentile_75": 3.28934146793744,
+              "percentile_25": -3.2913136300239856,
+              "num_stints": 65
+            },
+            "rank": 1
+          },
+          {
+            "driver_code": "PIA",
+            "value": {
+              "mean_dab": -0.3432570333258026,
+              "median_dab": 0.41947509678265504,
+              "std_dab": 3.3605896637242023,
+              "percentile_75": 2.329396742900819,
+              "percentile_25": -3.613981705585509,
+              "num_stints": 66
+            },
+            "rank": 2
+          }
+        ],
+        "statistics": {
+          "max_delta": 0.6917949440873864,
+          "mean_value": 0.002640438717890603,
+          "std_value": 0.3458974720436932
+        }
+      }
+    },
+    {
+      "category": "teammate_battle",
+      "name": "Aston Martin: ALO vs STR",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "ALO",
+          "STR"
+        ],
+        "metric_type": "dab",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1724.65,
+      "success": true,
+      "data": {
+        "metric_type": "dab",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "drivers": [
+          {
+            "driver_code": "ALO",
+            "value": {
+              "mean_dab": 0.26691887825480504,
+              "median_dab": 1.7636062833997954,
+              "std_dab": 3.754219436493802,
+              "percentile_75": 3.1388675901624907,
+              "percentile_25": -2.9834354188707124,
+              "num_stints": 67
+            },
+            "rank": 1
+          },
+          {
+            "driver_code": "STR",
+            "value": {
+              "mean_dab": -0.2629936006334077,
+              "median_dab": 0.21915170881483448,
+              "std_dab": 3.8027555556088206,
+              "percentile_75": 3.4487755033704985,
+              "percentile_25": -3.7911403444078218,
+              "num_stints": 68
+            },
+            "rank": 2
+          }
+        ],
+        "statistics": {
+          "max_delta": 0.5299124788882128,
+          "mean_value": 0.0019626388106986636,
+          "std_value": 0.2649562394441064
+        }
+      }
+    },
+    {
+      "category": "teammate_battle",
+      "name": "Alpine: GAS vs OCO",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "GAS",
+          "OCO"
+        ],
+        "metric_type": "dab",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1553.91,
+      "success": true,
+      "data": {
+        "metric_type": "dab",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "drivers": [
+          {
+            "driver_code": "OCO",
+            "value": {
+              "mean_dab": 0.032143120662301246,
+              "median_dab": -0.49465780104360135,
+              "std_dab": 3.814026569193045,
+              "percentile_75": 2.854551030743508,
+              "percentile_25": -3.103729532610984,
+              "num_stints": 61
+            },
+            "rank": 1
+          },
+          {
+            "driver_code": "GAS",
+            "value": {
+              "mean_dab": -0.04282732794109431,
+              "median_dab": 1.15659494553843,
+              "std_dab": 3.9898568582704272,
+              "percentile_75": 2.838264180767922,
+              "percentile_25": -3.7800353034850076,
+              "num_stints": 61
+            },
+            "rank": 2
+          }
+        ],
+        "statistics": {
+          "max_delta": 0.07497044860339555,
+          "mean_value": -0.005342103639396533,
+          "std_value": 0.037485224301697775
+        }
+      }
+    },
+    {
+      "category": "teammate_battle",
+      "name": "Williams: ALB vs SAR",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "ALB",
+          "SAR"
+        ],
+        "metric_type": "dab",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1445.85,
+      "success": true,
+      "data": {
+        "metric_type": "dab",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "drivers": [
+          {
+            "driver_code": "ALB",
+            "value": {
+              "mean_dab": 0.8389489577630791,
+              "median_dab": 2.406245247391631,
+              "std_dab": 3.4827458386352133,
+              "percentile_75": 3.9605794110574024,
+              "percentile_25": -2.5265636286459667,
+              "num_stints": 62
+            },
+            "rank": 1
+          },
+          {
+            "driver_code": "SAR",
+            "value": {
+              "mean_dab": -1.0247439250088668,
+              "median_dab": -0.5418310007773144,
+              "std_dab": 4.167616802105513,
+              "percentile_75": 2.431918159989287,
+              "percentile_25": -4.872397407027314,
+              "num_stints": 41
+            },
+            "rank": 2
+          }
+        ],
+        "statistics": {
+          "max_delta": 1.863692882771946,
+          "mean_value": -0.09289748362289385,
+          "std_value": 0.931846441385973
+        }
+      }
+    },
+    {
+      "category": "teammate_battle",
+      "name": "Haas: MAG vs HUL",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "MAG",
+          "HUL"
+        ],
+        "metric_type": "dab",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1697.56,
+      "success": true,
+      "data": {
+        "metric_type": "dab",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "drivers": [
+          {
+            "driver_code": "HUL",
+            "value": {
+              "mean_dab": 0.5630956383109177,
+              "median_dab": 1.879930592965387,
+              "std_dab": 3.7062522293639337,
+              "percentile_75": 3.8713818563931213,
+              "percentile_25": -3.109268091726996,
+              "num_stints": 68
+            },
+            "rank": 1
+          },
+          {
+            "driver_code": "MAG",
+            "value": {
+              "mean_dab": -0.690719538017996,
+              "median_dab": -0.77706327300141,
+              "std_dab": 3.5317537411692213,
+              "percentile_75": 1.851237393807672,
+              "percentile_25": -4.074034594107367,
+              "num_stints": 63
+            },
+            "rank": 2
+          }
+        ],
+        "statistics": {
+          "max_delta": 1.2538151763289136,
+          "mean_value": -0.06381194985353916,
+          "std_value": 0.6269075881644568
+        }
+      }
+    },
+    {
+      "category": "teammate_battle",
+      "name": "RB: TSU vs RIC",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "TSU",
+          "RIC"
+        ],
+        "metric_type": "dab",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1501.27,
+      "success": true,
+      "data": {
+        "metric_type": "dab",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "drivers": [
+          {
+            "driver_code": "RIC",
+            "value": {
+              "mean_dab": 0.8080940776401095,
+              "median_dab": 2.4276084370083275,
+              "std_dab": 3.9678297769635624,
+              "percentile_75": 4.47130102581448,
+              "percentile_25": -1.9570694499545631,
+              "num_stints": 45
+            },
+            "rank": 1
+          },
+          {
+            "driver_code": "TSU",
+            "value": {
+              "mean_dab": -0.782564935354153,
+              "median_dab": 0.35102934307522204,
+              "std_dab": 3.834914594278736,
+              "percentile_75": 2.2061500019497338,
+              "percentile_25": -4.237484031253391,
+              "num_stints": 61
+            },
+            "rank": 2
+          }
+        ],
+        "statistics": {
+          "max_delta": 1.5906590129942626,
+          "mean_value": 0.012764571142978298,
+          "std_value": 0.7953295064971313
+        }
+      }
+    },
+    {
+      "category": "teammate_battle",
+      "name": "Sauber: BOT vs ZHO",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "BOT",
+          "ZHO"
+        ],
+        "metric_type": "dab",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1691.47,
+      "success": true,
+      "data": {
+        "metric_type": "dab",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "drivers": [
+          {
+            "driver_code": "ZHO",
+            "value": {
+              "mean_dab": 0.08774249425578583,
+              "median_dab": 0.8391067858095518,
+              "std_dab": 3.502700123822237,
+              "percentile_75": 3.0675208444948545,
+              "percentile_25": -3.618748438799823,
+              "num_stints": 71
+            },
+            "rank": 1
+          },
+          {
+            "driver_code": "BOT",
+            "value": {
+              "mean_dab": -0.09733932956501334,
+              "median_dab": 0.8687107439394346,
+              "std_dab": 3.7293647583793885,
+              "percentile_75": 2.3486702318544737,
+              "percentile_25": -3.5714614514951357,
+              "num_stints": 64
+            },
+            "rank": 2
+          }
+        ],
+        "statistics": {
+          "max_delta": 0.18508182382079919,
+          "mean_value": -0.004798417654613758,
+          "std_value": 0.09254091191039959
+        }
+      }
+    },
+    {
+      "category": "edge_case",
+      "name": "Verstappen vs Bottas (frontrunner vs backmarker)",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "VER",
+          "BOT"
+        ],
+        "metric_type": "dab",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1704.9,
+      "success": true,
+      "data": {
+        "metric_type": "dab",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "drivers": [
+          {
+            "driver_code": "VER",
+            "value": {
+              "mean_dab": 0.33942583236927426,
+              "median_dab": 1.0891736898207132,
+              "std_dab": 3.924071082503481,
+              "percentile_75": 4.016199484803623,
+              "percentile_25": -3.06618653204208,
+              "num_stints": 64
+            },
+            "rank": 1
+          },
+          {
+            "driver_code": "BOT",
+            "value": {
+              "mean_dab": -0.09733932956501334,
+              "median_dab": 0.8687107439394346,
+              "std_dab": 3.7293647583793885,
+              "percentile_75": 2.3486702318544737,
+              "percentile_25": -3.5714614514951357,
+              "num_stints": 64
+            },
+            "rank": 2
+          }
+        ],
+        "statistics": {
+          "max_delta": 0.4367651619342876,
+          "mean_value": 0.12104325140213046,
+          "std_value": 0.2183825809671438
+        }
+      }
+    },
+    {
+      "category": "edge_case",
+      "name": "Piastri vs Alonso (rookie vs veteran)",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "PIA",
+          "ALO"
+        ],
+        "metric_type": "dab",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1678.27,
+      "success": true,
+      "data": {
+        "metric_type": "dab",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "drivers": [
+          {
+            "driver_code": "ALO",
+            "value": {
+              "mean_dab": 0.26691887825480504,
+              "median_dab": 1.7636062833997954,
+              "std_dab": 3.754219436493802,
+              "percentile_75": 3.1388675901624907,
+              "percentile_25": -2.9834354188707124,
+              "num_stints": 67
+            },
+            "rank": 1
+          },
+          {
+            "driver_code": "PIA",
+            "value": {
+              "mean_dab": -0.3432570333258026,
+              "median_dab": 0.41947509678265504,
+              "std_dab": 3.3605896637242023,
+              "percentile_75": 2.329396742900819,
+              "percentile_25": -3.613981705585509,
+              "num_stints": 66
+            },
+            "rank": 2
+          }
+        ],
+        "statistics": {
+          "max_delta": 0.6101759115806076,
+          "mean_value": -0.03816907753549878,
+          "std_value": 0.3050879557903038
+        }
+      }
+    },
+    {
+      "category": "edge_case",
+      "name": "All 10 teams comparison",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "VER",
+          "HAM",
+          "LEC",
+          "NOR",
+          "ALO",
+          "GAS",
+          "ALB",
+          "MAG",
+          "TSU",
+          "BOT"
+        ],
+        "metric_type": "dab",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 8190.92,
+      "success": true,
+      "data": {
+        "metric_type": "dab",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "drivers": [
+          {
+            "driver_code": "ALB",
+            "value": {
+              "mean_dab": 0.8389489577630791,
+              "median_dab": 2.406245247391631,
+              "std_dab": 3.4827458386352133,
+              "percentile_75": 3.9605794110574024,
+              "percentile_25": -2.5265636286459667,
+              "num_stints": 62
+            },
+            "rank": 1
+          },
+          {
+            "driver_code": "LEC",
+            "value": {
+              "mean_dab": 0.7914682899002361,
+              "median_dab": 2.122018209144251,
+              "std_dab": 3.8446174402159774,
+              "percentile_75": 3.7520173699108526,
+              "percentile_25": -2.809176096275671,
+              "num_stints": 66
+            },
+            "rank": 2
+          },
+          {
+            "driver_code": "NOR",
+            "value": {
+              "mean_dab": 0.3485379107615838,
+              "median_dab": 1.74140502842328,
+              "std_dab": 3.8039415495938034,
+              "percentile_75": 3.28934146793744,
+              "percentile_25": -3.2913136300239856,
+              "num_stints": 65
+            },
+            "rank": 3
+          },
+          {
+            "driver_code": "VER",
+            "value": {
+              "mean_dab": 0.33942583236927426,
+              "median_dab": 1.0891736898207132,
+              "std_dab": 3.924071082503481,
+              "percentile_75": 4.016199484803623,
+              "percentile_25": -3.06618653204208,
+              "num_stints": 64
+            },
+            "rank": 4
+          },
+          {
+            "driver_code": "ALO",
+            "value": {
+              "mean_dab": 0.26691887825480504,
+              "median_dab": 1.7636062833997954,
+              "std_dab": 3.754219436493802,
+              "percentile_75": 3.1388675901624907,
+              "percentile_25": -2.9834354188707124,
+              "num_stints": 67
+            },
+            "rank": 5
+          },
+          {
+            "driver_code": "GAS",
+            "value": {
+              "mean_dab": -0.04282732794109431,
+              "median_dab": 1.15659494553843,
+              "std_dab": 3.9898568582704272,
+              "percentile_75": 2.838264180767922,
+              "percentile_25": -3.7800353034850076,
+              "num_stints": 61
+            },
+            "rank": 6
+          },
+          {
+            "driver_code": "BOT",
+            "value": {
+              "mean_dab": -0.09733932956501334,
+              "median_dab": 0.8687107439394346,
+              "std_dab": 3.7293647583793885,
+              "percentile_75": 2.3486702318544737,
+              "percentile_25": -3.5714614514951357,
+              "num_stints": 64
+            },
+            "rank": 7
+          },
+          {
+            "driver_code": "MAG",
+            "value": {
+              "mean_dab": -0.690719538017996,
+              "median_dab": -0.77706327300141,
+              "std_dab": 3.5317537411692213,
+              "percentile_75": 1.851237393807672,
+              "percentile_25": -4.074034594107367,
+              "num_stints": 63
+            },
+            "rank": 8
+          },
+          {
+            "driver_code": "HAM",
+            "value": {
+              "mean_dab": -0.7100008689995966,
+              "median_dab": 0.5039467883832529,
+              "std_dab": 3.852860641512469,
+              "percentile_75": 3.0590577197797373,
+              "percentile_25": -4.612334721016161,
+              "num_stints": 66
+            },
+            "rank": 9
+          },
+          {
+            "driver_code": "TSU",
+            "value": {
+              "mean_dab": -0.782564935354153,
+              "median_dab": 0.35102934307522204,
+              "std_dab": 3.834914594278736,
+              "percentile_75": 2.2061500019497338,
+              "percentile_25": -4.237484031253391,
+              "num_stints": 61
+            },
+            "rank": 10
+          }
+        ],
+        "statistics": {
+          "max_delta": 1.621513893117232,
+          "mean_value": 0.026184786917112512,
+          "std_value": 0.56888021171433
+        }
+      }
+    },
+    {
+      "category": "race_specific",
+      "name": "DAB for VER in race 1",
+      "endpoint": "/api/v1/metrics/dab",
+      "params": {
+        "driver_code": "VER",
+        "race_id": 1
+      },
+      "status_code": 200,
+      "response_time_ms": 618.27,
+      "success": true,
+      "data": {
+        "driver_code": "VER",
+        "metric_type": "dab",
+        "scope": {
+          "race_id": 1,
+          "season": null,
+          "track_id": null,
+          "compound": null
+        },
+        "value": {
+          "mean_dab": -3.720272408591377,
+          "median_dab": -3.720272408591377,
+          "std_dab": 0.0,
+          "num_stints": 3
+        }
+      }
+    },
+    {
+      "category": "race_specific",
+      "name": "DAB for VER in race 55",
+      "endpoint": "/api/v1/metrics/dab",
+      "params": {
+        "driver_code": "VER",
+        "race_id": 55
+      },
+      "status_code": 200,
+      "response_time_ms": 867.46,
+      "success": true,
+      "data": {
+        "driver_code": "VER",
+        "metric_type": "dab",
+        "scope": {
+          "race_id": 55,
+          "season": null,
+          "track_id": null,
+          "compound": null
+        },
+        "value": {
+          "mean_dab": 3.417787362118156,
+          "median_dab": 3.4177873621181565,
+          "std_dab": 4.440892098500626e-16,
+          "num_stints": 5
+        }
+      }
+    },
+    {
+      "category": "race_specific",
+      "name": "DAB for VER in race 100",
+      "endpoint": "/api/v1/metrics/dab",
+      "params": {
+        "driver_code": "VER",
+        "race_id": 100
+      },
+      "status_code": 404,
+      "response_time_ms": 4.04,
+      "success": false,
+      "error": "{\"detail\":\"No stints found for race_id=100, driver=VER\"}"
+    },
+    {
+      "category": "race_specific",
+      "name": "TPI comparison in race 55",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "VER",
+          "LEC",
+          "HAM"
+        ],
+        "metric_type": "tpi",
+        "race_id": 55
+      },
+      "status_code": 404,
+      "response_time_ms": 3.67,
+      "success": false,
+      "error": "{\"detail\":\"No data found for any driver\"}"
+    },
+    {
+      "category": "track_specific",
+      "name": "VER DAB at monaco",
+      "endpoint": "/api/v1/metrics/dab",
+      "params": {
+        "driver_code": "VER",
+        "season": 2024,
+        "track_id": "monaco"
+      },
+      "status_code": 404,
+      "response_time_ms": 3.5,
+      "success": false,
+      "error": "{\"detail\":\"No races found for season=2024, driver=VER, track=monaco\"}"
+    },
+    {
+      "category": "track_specific",
+      "name": "VER DAB at monza",
+      "endpoint": "/api/v1/metrics/dab",
+      "params": {
+        "driver_code": "VER",
+        "season": 2024,
+        "track_id": "monza"
+      },
+      "status_code": 404,
+      "response_time_ms": 3.57,
+      "success": false,
+      "error": "{\"detail\":\"No races found for season=2024, driver=VER, track=monza\"}"
+    },
+    {
+      "category": "track_specific",
+      "name": "VER DAB at spa",
+      "endpoint": "/api/v1/metrics/dab",
+      "params": {
+        "driver_code": "VER",
+        "season": 2024,
+        "track_id": "spa"
+      },
+      "status_code": 404,
+      "response_time_ms": 2.84,
+      "success": false,
+      "error": "{\"detail\":\"No races found for season=2024, driver=VER, track=spa\"}"
+    },
+    {
+      "category": "track_specific",
+      "name": "VER DAB at silverstone",
+      "endpoint": "/api/v1/metrics/dab",
+      "params": {
+        "driver_code": "VER",
+        "season": 2024,
+        "track_id": "silverstone"
+      },
+      "status_code": 404,
+      "response_time_ms": 2.39,
+      "success": false,
+      "error": "{\"detail\":\"No races found for season=2024, driver=VER, track=silverstone\"}"
+    },
+    {
+      "category": "tme_compound",
+      "name": "VER on SOFT",
+      "endpoint": "/api/v1/metrics/tme",
+      "params": {
+        "driver_code": "VER",
+        "season": 2024,
+        "compound": "SOFT"
+      },
+      "status_code": 200,
+      "response_time_ms": 291.36,
+      "success": true,
+      "data": {
+        "driver_code": "VER",
+        "metric_type": "tme",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": "SOFT"
+        },
+        "value": {
+          "mean_tme": 0.3932461216915661,
+          "median_tme": 0.3414786607027054,
+          "std_tme": 0.35877466880308706,
+          "num_stints": 6
+        }
+      }
+    },
+    {
+      "category": "tme_compound",
+      "name": "VER on MEDIUM",
+      "endpoint": "/api/v1/metrics/tme",
+      "params": {
+        "driver_code": "VER",
+        "season": 2024,
+        "compound": "MEDIUM"
+      },
+      "status_code": 200,
+      "response_time_ms": 292.13,
+      "success": true,
+      "data": {
+        "driver_code": "VER",
+        "metric_type": "tme",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": "MEDIUM"
+        },
+        "value": {
+          "mean_tme": -0.23436596882716787,
+          "median_tme": -0.26584744453430176,
+          "std_tme": 0.33524878446679185,
+          "num_stints": 27
+        }
+      }
+    },
+    {
+      "category": "tme_compound",
+      "name": "VER on HARD",
+      "endpoint": "/api/v1/metrics/tme",
+      "params": {
+        "driver_code": "VER",
+        "season": 2024,
+        "compound": "HARD"
+      },
+      "status_code": 200,
+      "response_time_ms": 292.88,
+      "success": true,
+      "data": {
+        "driver_code": "VER",
+        "metric_type": "tme",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": "HARD"
+        },
+        "value": {
+          "mean_tme": -0.10585257767449971,
+          "median_tme": -0.04322244971990585,
+          "std_tme": 0.5972554728631686,
+          "num_stints": 26
+        }
+      }
+    },
+    {
+      "category": "tme_compound",
+      "name": "VER on INTERMEDIATE",
+      "endpoint": "/api/v1/metrics/tme",
+      "params": {
+        "driver_code": "VER",
+        "season": 2024,
+        "compound": "INTERMEDIATE"
+      },
+      "status_code": 200,
+      "response_time_ms": 290.7,
+      "success": true,
+      "data": {
+        "driver_code": "VER",
+        "metric_type": "tme",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": "INTERMEDIATE"
+        },
+        "value": {
+          "mean_tme": 0.9212440252304077,
+          "median_tme": 0.9503973722457886,
+          "std_tme": 0.24820540845394135,
+          "num_stints": 5
+        }
+      }
+    },
+    {
+      "category": "tme_full",
+      "name": "VER TME (all compounds)",
+      "endpoint": "/api/v1/metrics/tme",
+      "params": {
+        "driver_code": "VER",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 291.94,
+      "success": true,
+      "data": {
+        "driver_code": "VER",
+        "metric_type": "tme",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "value": {
+          "SOFT": {
+            "mean_tme": 0.3932461216915661,
+            "median_tme": 0.3414786607027054,
+            "std_tme": 0.35877466880308706,
+            "num_stints": 6
+          },
+          "HARD": {
+            "mean_tme": -0.10585257767449971,
+            "median_tme": -0.04322244971990585,
+            "std_tme": 0.5972554728631686,
+            "num_stints": 26
+          },
+          "MEDIUM": {
+            "mean_tme": -0.23436596882716787,
+            "median_tme": -0.26584744453430176,
+            "std_tme": 0.33524878446679185,
+            "num_stints": 27
+          },
+          "INTERMEDIATE": {
+            "mean_tme": 0.9212440252304077,
+            "median_tme": 0.9503973722457886,
+            "std_tme": 0.24820540845394135,
+            "num_stints": 5
+          }
+        }
+      }
+    },
+    {
+      "category": "tme_full",
+      "name": "PER TME (all compounds)",
+      "endpoint": "/api/v1/metrics/tme",
+      "params": {
+        "driver_code": "PER",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 311.82,
+      "success": true,
+      "data": {
+        "driver_code": "PER",
+        "metric_type": "tme",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "value": {
+          "SOFT": {
+            "mean_tme": 0.2533169730315649,
+            "median_tme": 0.27438026666641235,
+            "std_tme": 0.31424392184255495,
+            "num_stints": 8
+          },
+          "HARD": {
+            "mean_tme": -0.1688480283471068,
+            "median_tme": -0.09482510387897491,
+            "std_tme": 0.6056166849939055,
+            "num_stints": 26
+          },
+          "MEDIUM": {
+            "mean_tme": -0.2834955280831813,
+            "median_tme": -0.3404749184846878,
+            "std_tme": 0.3612859187565374,
+            "num_stints": 28
+          },
+          "INTERMEDIATE": {
+            "mean_tme": 0.8305676579475403,
+            "median_tme": 0.8160314559936523,
+            "std_tme": 0.23757381737232208,
+            "num_stints": 6
+          },
+          "WET": {
+            "mean_tme": -0.22983750714951476,
+            "median_tme": -0.22983750714951476,
+            "std_tme": 0.0,
+            "num_stints": 1
+          }
+        }
+      }
+    },
+    {
+      "category": "tme_full",
+      "name": "SAI TME (all compounds)",
+      "endpoint": "/api/v1/metrics/tme",
+      "params": {
+        "driver_code": "SAI",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 276.67,
+      "success": true,
+      "data": {
+        "driver_code": "SAI",
+        "metric_type": "tme",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "value": {
+          "SOFT": {
+            "mean_tme": 0.2673107037681368,
+            "median_tme": 0.2964318096637726,
+            "std_tme": 0.26623516579626094,
+            "num_stints": 3
+          },
+          "HARD": {
+            "mean_tme": -0.09475358634987856,
+            "median_tme": -0.004015088081359863,
+            "std_tme": 0.5833577875504545,
+            "num_stints": 27
+          },
+          "MEDIUM": {
+            "mean_tme": -0.20291273265170282,
+            "median_tme": -0.29466748237609863,
+            "std_tme": 0.29048426746452105,
+            "num_stints": 25
+          },
+          "INTERMEDIATE": {
+            "mean_tme": 0.004797244104177922,
+            "median_tme": 0.4969661831855774,
+            "std_tme": 1.4305309027978779,
+            "num_stints": 6
+          }
+        }
+      }
+    },
+    {
+      "category": "teammate_comparison",
+      "name": "VER vs teammates",
+      "endpoint": "/api/v1/drivers/teammate-comparison/VER",
+      "params": {
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1678.83,
+      "success": true,
+      "data": {
+        "driver_code": "VER",
+        "season": 2024,
+        "driver_dab": 0.33942583236927426,
+        "teammate_dabs": {
+          "PER": -0.3148297575599057
+        },
+        "teammate_deltas": {
+          "PER": 0.65425558992918
+        },
+        "mean_delta": 0.65425558992918,
+        "num_teammates": 1
+      }
+    },
+    {
+      "category": "teammate_comparison",
+      "name": "HAM vs teammates",
+      "endpoint": "/api/v1/drivers/teammate-comparison/HAM",
+      "params": {
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1666.72,
+      "success": true,
+      "data": {
+        "driver_code": "HAM",
+        "season": 2024,
+        "driver_dab": -0.7100008689995966,
+        "teammate_dabs": {
+          "RUS": 0.710000868999597
+        },
+        "teammate_deltas": {
+          "RUS": -1.4200017379991936
+        },
+        "mean_delta": -1.4200017379991936,
+        "num_teammates": 1
+      }
+    },
+    {
+      "category": "teammate_comparison",
+      "name": "LEC vs teammates",
+      "endpoint": "/api/v1/drivers/teammate-comparison/LEC",
+      "params": {
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 2840.86,
+      "success": true,
+      "data": {
+        "driver_code": "LEC",
+        "season": 2024,
+        "driver_dab": 0.7914682899002361,
+        "teammate_dabs": {
+          "BEA": 0.35731841701703104,
+          "SAI": -0.8492225380261191
+        },
+        "teammate_deltas": {
+          "BEA": 0.43414987288320506,
+          "SAI": 1.6406908279263552
+        },
+        "mean_delta": 1.03742035040478,
+        "num_teammates": 2
+      }
+    },
+    {
+      "category": "teammate_comparison",
+      "name": "NOR vs teammates",
+      "endpoint": "/api/v1/drivers/teammate-comparison/NOR",
+      "params": {
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1650.59,
+      "success": true,
+      "data": {
+        "driver_code": "NOR",
+        "season": 2024,
+        "driver_dab": 0.3485379107615838,
+        "teammate_dabs": {
+          "PIA": -0.3432570333258026
+        },
+        "teammate_deltas": {
+          "PIA": 0.6917949440873864
+        },
+        "mean_delta": 0.6917949440873864,
+        "num_teammates": 1
+      }
+    },
+    {
+      "category": "teammate_comparison",
+      "name": "BOT vs teammates",
+      "endpoint": "/api/v1/drivers/teammate-comparison/BOT",
+      "params": {
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1699.43,
+      "success": true,
+      "data": {
+        "driver_code": "BOT",
+        "season": 2024,
+        "driver_dab": -0.09733932956501334,
+        "teammate_dabs": {
+          "ZHO": 0.08774249425578583
+        },
+        "teammate_deltas": {
+          "ZHO": -0.18508182382079919
+        },
+        "mean_delta": -0.18508182382079919,
+        "num_teammates": 1
+      }
+    },
+    {
+      "category": "tpi_season",
+      "name": "VER season TPI",
+      "endpoint": "/api/v1/metrics/tpi",
+      "params": {
+        "driver_code": "VER",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 275.87,
+      "success": true,
+      "data": {
+        "driver_code": "VER",
+        "metric_type": "tpi",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "value": {
+          "mean_tpi": 81.92689788341522,
+          "median_tpi": 79.80118942260742,
+          "std_tpi": 10.912520691364602,
+          "percentile_75": 90.02268409729004,
+          "percentile_25": 73.69876289367676,
+          "num_stints": 64
+        }
+      }
+    },
+    {
+      "category": "tpi_season",
+      "name": "PER season TPI",
+      "endpoint": "/api/v1/metrics/tpi",
+      "params": {
+        "driver_code": "PER",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 294.58,
+      "success": true,
+      "data": {
+        "driver_code": "PER",
+        "metric_type": "tpi",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "value": {
+          "mean_tpi": 83.3682357677515,
+          "median_tpi": 81.56394958496094,
+          "std_tpi": 10.527088853744042,
+          "percentile_75": 91.11040496826172,
+          "percentile_25": 74.80718994140625,
+          "num_stints": 69
+        }
+      }
+    },
+    {
+      "category": "tpi_season",
+      "name": "LEC season TPI",
+      "endpoint": "/api/v1/metrics/tpi",
+      "params": {
+        "driver_code": "LEC",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 282.75,
+      "success": true,
+      "data": {
+        "driver_code": "LEC",
+        "metric_type": "tpi",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "value": {
+          "mean_tpi": 81.84074488553134,
+          "median_tpi": 80.23311996459961,
+          "std_tpi": 10.808234862066179,
+          "percentile_75": 89.73962211608887,
+          "percentile_25": 73.81090927124023,
+          "num_stints": 66
+        }
+      }
+    },
+    {
+      "category": "tpi_season",
+      "name": "SAI season TPI",
+      "endpoint": "/api/v1/metrics/tpi",
+      "params": {
+        "driver_code": "SAI",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 260.59,
+      "success": true,
+      "data": {
+        "driver_code": "SAI",
+        "metric_type": "tpi",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "value": {
+          "mean_tpi": 83.00755009885694,
+          "median_tpi": 81.32414245605469,
+          "std_tpi": 10.827958435111835,
+          "percentile_75": 91.2462387084961,
+          "percentile_25": 74.51312255859375,
+          "num_stints": 61
+        }
+      }
+    },
+    {
+      "category": "tpi_season",
+      "name": "NOR season TPI",
+      "endpoint": "/api/v1/metrics/tpi",
+      "params": {
+        "driver_code": "NOR",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 278.53,
+      "success": true,
+      "data": {
+        "driver_code": "NOR",
+        "metric_type": "tpi",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "value": {
+          "mean_tpi": 81.29807005662184,
+          "median_tpi": 78.66423797607422,
+          "std_tpi": 10.638552868245915,
+          "percentile_75": 90.13098907470703,
+          "percentile_25": 72.93757629394531,
+          "num_stints": 65
+        }
+      }
+    },
+    {
+      "category": "tpi_season",
+      "name": "PIA season TPI",
+      "endpoint": "/api/v1/metrics/tpi",
+      "params": {
+        "driver_code": "PIA",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 281.11,
+      "success": true,
+      "data": {
+        "driver_code": "PIA",
+        "metric_type": "tpi",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "value": {
+          "mean_tpi": 82.19364830941865,
+          "median_tpi": 79.49090576171875,
+          "std_tpi": 10.291061608875461,
+          "percentile_75": 90.38692855834961,
+          "percentile_25": 74.4246997833252,
+          "num_stints": 66
+        }
+      }
+    },
+    {
+      "category": "tpi_season",
+      "name": "BOT season TPI",
+      "endpoint": "/api/v1/metrics/tpi",
+      "params": {
+        "driver_code": "BOT",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 273.44,
+      "success": true,
+      "data": {
+        "driver_code": "BOT",
+        "metric_type": "tpi",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "value": {
+          "mean_tpi": 83.99735581874847,
+          "median_tpi": 82.6956787109375,
+          "std_tpi": 10.636227741075079,
+          "percentile_75": 92.3234634399414,
+          "percentile_25": 75.5361499786377,
+          "num_stints": 64
+        }
+      }
+    },
+    {
+      "category": "tpi_season",
+      "name": "SAR season TPI",
+      "endpoint": "/api/v1/metrics/tpi",
+      "params": {
+        "driver_code": "SAR",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 177.39,
+      "success": true,
+      "data": {
+        "driver_code": "SAR",
+        "metric_type": "tpi",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "value": {
+          "mean_tpi": 83.80070309522675,
+          "median_tpi": 85.86945343017578,
+          "std_tpi": 11.661683189401453,
+          "percentile_75": 92.23475646972656,
+          "percentile_25": 74.23766326904297,
+          "num_stints": 41
+        }
+      }
+    },
+    {
+      "category": "tpi_comparison",
+      "name": "Teammate TPI comparison",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "VER",
+          "PER",
+          "LEC",
+          "SAI"
+        ],
+        "metric_type": "tpi",
+        "season": 2024
+      },
+      "status_code": 200,
+      "response_time_ms": 1102.42,
+      "success": true,
+      "data": {
+        "metric_type": "tpi",
+        "scope": {
+          "race_id": null,
+          "season": 2024,
+          "track_id": null,
+          "compound": null
+        },
+        "drivers": [
+          {
+            "driver_code": "LEC",
+            "value": {
+              "mean_tpi": 81.84074488553134,
+              "median_tpi": 80.23311996459961,
+              "std_tpi": 10.808234862066179,
+              "percentile_75": 89.73962211608887,
+              "percentile_25": 73.81090927124023,
+              "num_stints": 66
+            },
+            "rank": 1
+          },
+          {
+            "driver_code": "VER",
+            "value": {
+              "mean_tpi": 81.92689788341522,
+              "median_tpi": 79.80118942260742,
+              "std_tpi": 10.912520691364602,
+              "percentile_75": 90.02268409729004,
+              "percentile_25": 73.69876289367676,
+              "num_stints": 64
+            },
+            "rank": 2
+          },
+          {
+            "driver_code": "SAI",
+            "value": {
+              "mean_tpi": 83.00755009885694,
+              "median_tpi": 81.32414245605469,
+              "std_tpi": 10.827958435111835,
+              "percentile_75": 91.2462387084961,
+              "percentile_25": 74.51312255859375,
+              "num_stints": 61
+            },
+            "rank": 3
+          },
+          {
+            "driver_code": "PER",
+            "value": {
+              "mean_tpi": 83.3682357677515,
+              "median_tpi": 81.56394958496094,
+              "std_tpi": 10.527088853744042,
+              "percentile_75": 91.11040496826172,
+              "percentile_25": 74.80718994140625,
+              "num_stints": 69
+            },
+            "rank": 4
+          }
+        ],
+        "statistics": {
+          "max_delta": 1.5274908822201638,
+          "mean_value": 82.53585715888875,
+          "std_value": 0.6650866202731559
+        }
+      }
+    },
+    {
+      "category": "error_handling",
+      "name": "Invalid driver code",
+      "endpoint": "/api/v1/metrics/dab",
+      "params": {
+        "driver_code": "XXX",
+        "season": 2024
+      },
+      "status_code": 404,
+      "response_time_ms": 3.87,
+      "success": true,
+      "error": "{\"detail\":\"No races found for season=2024, driver=XXX, track=None\"}"
+    },
+    {
+      "category": "error_handling",
+      "name": "Invalid race ID",
+      "endpoint": "/api/v1/metrics/dab",
+      "params": {
+        "driver_code": "VER",
+        "race_id": 99999
+      },
+      "status_code": 404,
+      "response_time_ms": 2.98,
+      "success": true,
+      "error": "{\"detail\":\"No stints found for race_id=99999, driver=VER\"}"
+    },
+    {
+      "category": "error_handling",
+      "name": "Missing season/race_id parameter",
+      "endpoint": "/api/v1/metrics/dab",
+      "params": {
+        "driver_code": "VER"
+      },
+      "status_code": 500,
+      "response_time_ms": 3.9,
+      "success": false,
+      "error": "{\"detail\":\"Internal server error\"}"
+    },
+    {
+      "category": "error_handling",
+      "name": "Invalid metric type",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "VER",
+          "HAM"
+        ],
+        "metric_type": "invalid",
+        "season": 2024
+      },
+      "status_code": 422,
+      "response_time_ms": 2.98,
+      "success": true,
+      "error": "{\"detail\":[{\"type\":\"string_pattern_mismatch\",\"loc\":[\"query\",\"metric_type\"],\"msg\":\"String should match pattern '^(tpi|dab|tme)$'\",\"input\":\"invalid\",\"ctx\":{\"pattern\":\"^(tpi|dab|tme)$\"}}]}"
+    },
+    {
+      "category": "error_handling",
+      "name": "Too few drivers (min 2)",
+      "endpoint": "/api/v1/drivers/compare",
+      "params": {
+        "driver_codes": [
+          "VER"
+        ],
+        "metric_type": "dab",
+        "season": 2024
+      },
+      "status_code": 422,
+      "response_time_ms": 2.4,
+      "success": true,
+      "error": "{\"detail\":[{\"type\":\"too_short\",\"loc\":[\"query\",\"driver_codes\"],\"msg\":\"List should have at least 2 items after validation, not 1\",\"input\":[\"VER\"],\"ctx\":{\"field_type\":\"List\",\"min_length\":2,\"actual_length\":1}}]}"
+    }
+  ]
+}
