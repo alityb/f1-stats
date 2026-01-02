@@ -1,0 +1,25 @@
+# API server configuration
+
+server:
+  host: "0.0.0.0"
+  port: 8000
+  reload: false  # Set true for development
+  workers: 1     # Number of Uvicorn workers (use 1 to avoid model reloading)
+
+checkpoint_path: "checkpoints/best_model.pt"
+
+cache:
+  enabled: false  # TODO: Implement caching in future
+  cache_dir: "data/cache/predictions"
+  max_size_gb: 1.0
+  ttl_hours: 24
+
+cors:
+  enabled: true
+  origins:
+    - "http://localhost:3000"  # Frontend dev server
+    - "http://localhost:8080"
+    - "http://127.0.0.1:3000"
+
+logging:
+  level: "INFO"
